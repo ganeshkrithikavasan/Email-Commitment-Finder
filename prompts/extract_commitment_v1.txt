@@ -1,0 +1,39 @@
+You are reviewing a single email for commitments and deadlines.
+
+A commitment is a promise by the sender (or someone they represent) to do something.
+A deadline is a specific date or time by which something must happen.
+Many emails contain neither — that is the normal case, not an exception.
+
+Read the email below and decide:
+1. Does it contain a commitment, a deadline, or both?
+2. If yes, extract each one as a separate item.
+3. Rate your confidence in each extraction from 0.0 to 1.0.
+
+Rules:
+- Do not infer a deadline from vague language ("soon", "ASAP") unless a specific
+  date or day is actually stated. Vague urgency is not a deadline.
+- A forwarded or quoted email (text after "----- Forwarded message -----" or
+  "> " quote markers) describes someone else's commitment, not the sender's own.
+  Note whose commitment it is.
+- If you are not confident, say so in the confidence score rather than guessing.
+  A low-confidence correct answer is far better than a high-confidence wrong one.
+- Return ONLY valid JSON matching the schema below. No prose, no markdown fences.
+
+Schema:
+{
+  "has_commitment_or_deadline": boolean,
+  "items": [
+    {
+      "type": "commitment" | "deadline" | "both",
+      "text": "the exact relevant sentence or phrase from the email",
+      "attributed_to": "who is making this commitment (sender name or 'unknown')",
+      "date": "YYYY-MM-DD if a specific date is stated, otherwise null",
+      "confidence": 0.0 to 1.0
+    }
+  ]
+}
+
+Email Subject: {{subject}}
+Email Date: {{date}}
+Email Body:
+{{body}}
